@@ -11,17 +11,12 @@ Greenpower F24 teams race on a fixed 24V lead-acid battery. The driver has no in
 ## How it works
 
 An ESP32 reads the traction battery through isolated sensing and turns raw current/voltage into **live minutes-remaining**, using Peukert's Law — because lead-acid batteries deliver *less* capacity the harder you pull current:
-
-```
-t = C / (I^k)      # t = runtime (h), C = 20 Ah rated, k = 1.15 for lead-acid
-```
-
 - **Predictive runtime** — Peukert estimation implemented from scratch in C++, no libraries
 - **O(1) signal filtering** — a circular-buffer moving average (10 samples, modulo wrap-around) that tames motor EMI without re-summing on every loop
 - **Hysteresis safety state machine** — "Limp Mode" at 21.0 V deep sag; full power only returns once voltage recovers by a 1.5 V dead-band. No relay chatter, no welded contactors
 - **Isolated architecture** — 24 V traction power stepped down via a 100k/10k divider; current measured by a galvanically isolated ACS712 Hall-effect sensor (up to 30 A)
 - **12-bit ADC** — 4,096 steps vs the 1,024 of typical 10-bit microcontrollers, enough to catch micro-fluctuations in current draw
-- **Digital twin first** — an Excel model of the full 90-minute discharge curve set the pacing target (0.05 V/min) that the firmware enforces, before any hardware was bought
+- **Digital twin — real and open-source** — the 0.05 V/min pacing budget comes from a first-order lead-acid discharge model (Peukert's Law + internal-resistance sag). Two working, auditable versions ship with this repo: an interactive browser twin → [prestonforge.github.io/digital-twin.html](https://prestonforge.github.io/digital-twin.html), and a full Excel model with live formulas in `/docs`
 - **Fusion 360 enclosure** — ABS (not PLA: it warps at 60 °C next to a hot motor), brass threaded inserts, U-shaped cable slots for track vibration
 
 ## A documented pivot
@@ -49,6 +44,6 @@ Commercial equivalent: ~£100+ plus an Android phone.
 
 ## License
 
-MIT — see [LICENSE](LICENSE). Built for school STEM racing teams; use it, improve it, pass it on.
+MIT — see . Built for school STEM racing teams; use it, improve it, pass it on.
 
-*(Photos, wiring diagram, firmware source and the Excel digital-twin model are being added to `/docs` and `/firmware`.)*
+*(Photos, wiring diagram and the v1.3 firmware are being added to `/docs` and `/firmware`.)*
