@@ -44,4 +44,4 @@ Commercial equivalent: ~£100+ plus an Android phone.
 
 ## License
 
-MIT — see . Built for school STEM racing teams; use it, improve it, pass it on.
+MIT — see LICENSE. Built for school STEM racing teams; use it, improve it, pass it on.
