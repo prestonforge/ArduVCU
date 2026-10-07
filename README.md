@@ -11,6 +11,7 @@ Greenpower F24 teams race on a fixed 24V lead-acid battery. The driver has no in
 ## How it works
 
 An ESP32 reads the traction battery through isolated sensing and turns raw current/voltage into **live minutes-remaining**, using Peukert's Law — because lead-acid batteries deliver *less* capacity the harder you pull current:
+
 - **Predictive runtime** — Peukert estimation implemented from scratch in C++, no libraries
 - **O(1) signal filtering** — a circular-buffer moving average (10 samples, modulo wrap-around) that tames motor EMI without re-summing on every loop
 - **Hysteresis safety state machine** — "Limp Mode" at 21.0 V deep sag; full power only returns once voltage recovers by a 1.5 V dead-band. No relay chatter, no welded contactors
@@ -24,14 +25,13 @@ An ESP32 reads the traction battery through isolated sensing and turns raw curre
 The original design drove an I2C OLED cockpit display. It never initialised. After a systematic debug (I2C scanner, physical-layer checks, address verification) the project pivoted to **headless serial telemetry** — streaming at 2 Hz to a ground-station laptop. Better outcome: full data for aerodynamic tuning instead of a 0.96-inch driver display.
 
 ## Bill of materials (≈£55)
-
-| Item | Purpose |
-|---|---|
-| ESP32 DevKit (12-bit ADC) | Core MCU + telemetry |
-| ACS712 Hall-effect sensor (30 A) | Isolated current measurement |
-| 100k/10k resistor divider | 24 V → logic-level voltage sense |
-| Relay + contactor interface | Motor safety cut-off |
-| Enclosure (ABS, FDM-printed) | Vibration-resistant housing |
+   Item | Purpose |
+ |---|---|
+ | ESP32 DevKit (12-bit ADC) | Core MCU + telemetry |
+ | ACS712 Hall-effect sensor (30 A) | Isolated current measurement |
+ | 100k/10k resistor divider | 24 V → logic-level voltage sense |
+ | Relay + contactor interface | Motor safety cut-off |
+ | Enclosure (ABS, FDM-printed) | Vibration-resistant housing |
 
 Commercial equivalent: ~£100+ plus an Android phone.
 
@@ -45,5 +45,3 @@ Commercial equivalent: ~£100+ plus an Android phone.
 ## License
 
 MIT — see . Built for school STEM racing teams; use it, improve it, pass it on.
-
-*(Photos, wiring diagram and the v1.3 firmware are being added to `/docs` and `/firmware`.)*
